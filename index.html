@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,17 +16,25 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
+      background-color: #1a1a1a;
+      color: #fff;
     }
+
     .profile-img {
       background-image: url("assests/PortfolioProfile.jpeg");
       background-size: cover;
       background-position: center;
+      border-radius: 50%;
+      width: 300px;
+      height: 300px;
     }
+
     .portfolio-img {
       background-image: url("assests/PortfolioProfile.jpeg");
       background-size: cover;
       background-position: center;
     }
+
     .skill-img-container {
       width: 100px;
       height: 100px;
@@ -34,19 +43,23 @@
       justify-content: center;
       overflow: hidden;
     }
+
     .skill-img-container img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
     }
+
     .header-curve {
-      clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+      clip-path: none;
+      /* Remove curve for simplicity */
     }
+
     .go-to-top {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background-color: #065763;
+      background-color: #f28c38;
       color: #fff;
       width: 50px;
       height: 50px;
@@ -59,22 +72,109 @@
       transition: opacity 0.3s ease;
       z-index: 1000;
     }
+
     .go-to-top.visible {
       opacity: 1;
     }
+
     .go-to-top:hover {
-      background-color: #05444e;
+      background-color: #d8702b;
     }
-    /* Transition animation for page content */
+
     .page-content {
       transition: opacity 0.3s ease;
     }
+
     .page-content.fade-out {
       opacity: 1;
     }
+
+    .header-content {
+      padding: 50px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-text {
+      text-align: left;
+      flex: 1;
+    }
+
+    .header-text p {
+      font-size: 2rem;
+      color: #f28c38;
+
+    }
+
+    .social-icons a {
+      color: #fff;
+      margin: 0 10px;
+    }
+
+    .social-icons a:hover {
+      color: #f28c38;
+    }
+
+    .stat-box {
+      display: inline-block;
+      margin: 20px 15px;
+      padding: 10px 20px;
+      background-color: #2a2a2a;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .stat-box span {
+      display: block;
+      font-size: 1.5rem;
+      color: #f28c38;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #f28c38;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 10px;
+    }
+
+    .btn:hover {
+      background-color: #d8702b;
+    }
+
+    nav {
+      background-color: #1a1a1a;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #f28c38;
+    }
+
+    .skill-item {
+      transition: transform 0.2s ease;
+    }
+
+    .skill-item:hover {
+      transform: scale(1.1);
+    }
   </style>
 </head>
-
 
 <body className="bg-gray-500 text-black">
   <div id="root"></div>
@@ -91,104 +191,110 @@
             targetSection.scrollIntoView({ behavior: 'smooth' });
           }
           pageContent.classList.remove('fade-out');
-        }, 300); // Matches the transition duration
+        }, 300);
       };
 
       return (
-        <nav className="bg-black p-4 flex justify-center space-x-6 py-6 sticky top-0 z-50">
-          <a
-            href="#about"
-            className="text-white hover:text-orange-500 font-semibold"
-            onClick={(e) => handleNavClick(e, '#about')}
-          >
-            About me
-          </a>
-          <a
-            href="#skills"
-            className="text-white hover:text-orange-500 font-semibold"
-            onClick={(e) => handleNavClick(e, '#skills')}
-          >
-            Skills
-          </a>
-          <a
-            href="#project"
-            className="text-white hover:text-orange-500 font-semibold"
-            onClick={(e) => handleNavClick(e, '#project')}
-          >
-            Project
-          </a>
-          <a
-            href="#contact"
-            className="text-white hover:text-orange-500 font-semibold"
-            onClick={(e) => handleNavClick(e, '#contact')}
-          >
-            Contact
-          </a>
+        <nav>
+          <a href="#about" onClick={(e) => handleNavClick(e, '#about')}>About me</a>
+          <a href="#skills" onClick={(e) => handleNavClick(e, '#skills')}>Skills</a>
+          <a href="#project" onClick={(e) => handleNavClick(e, '#project')}>Project</a>
+          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contact</a>
         </nav>
       );
     };
 
     const Header = () => (
-      <header id="home" className="flex items-center h-screen bg-gray-100 text-black">
-        <div className="w-1/2 p-10 mb-4 ml-20">
-          <div className="text-4xl mb-2 font-light">Hi, I am</div>
-          <h1 className="text-5xl font-bold mb-4">Biraj</h1>
-          <p className="text-lg mb-4 font-medium">Front-end Developer / UI Designer</p>
-          <div className="flex space-x-4">
-            <a href="https://twitter.com" className="text-black hover:text-gray-500"><i className="fab fa-twitter"></i></a>
-            <a href="https://github.com" className="text-black hover:text-gray-500"><i className="fab fa-github"></i></a>
-            <a href="https://linkedin.com" className="text-black hover:text-gray-500"><i className="fab fa-linkedin"></i></a>
+      <header id="home" className="bg-black-200 text-white">
+        <div className="header-content ml-20">
+          <div className="header-text">
+            <div className="text-4xl mb-2 font-light">Hi, I am</div>
+            <h1 className="text-5xl font-bold mb-4">Birajman Dura</h1>
+            <p className="text-lg mb-4 font-medium">Front-end Developer / UI Designer</p>
+            <div className="social-icons flex space-x-4 mb-4">
+              <a href="https://github.com" className="hover:text-orange-500"><i className="fab fa-github"></i></a>
+              <a href="https://linkedin.com" className="hover:text-orange-500"><i className="fab fa-linkedin"></i></a>
+            </div>
+            <div className="flex">
+              <a href="#contact" className="btn">Hire Me</a>
+              <a href="#" className="btn">Download CV</a>
+            </div>
+            <div className="flex mt-6">
+              <div className="stat-box"><span>5+</span>Experiences</div>
+              <div className="stat-box"><span>20+</span>Project done</div>
+              <div className="stat-box"><span>80+</span>Happy Clients</div>
+            </div>
           </div>
-        </div>
-        <div className="w-1/2 h-full ml-0 bg-gray-300 header-curve">
-          <div className="profile-img w-full h-full"></div>
+          <div className="profile-img mr-20"></div>
         </div>
       </header>
     );
 
-    const About = () => (
-      <section id="about" className="py-10 bg-gray-200 text-center">
-        <h2 className="text-3xl font-bold mt-4 mb-4">About Me</h2>
-        <p className="text-gray-700 max-w-2xl mx-auto font-medium">
-          I am a passionate web developer with experience in building responsive and dynamic websites. Skilled in modern technologies, I strive to create user-friendly and innovative solutions.
+   const About = () => (
+  <section id="about" className="py-10 bg-[#1a1a1a] text-white">
+    <div className="max-w-6xl mx-auto flex items-center justify-between px-4">
+      <div className="w-1/2">
+        <div className="profile-img bg-gray-600" style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")', borderRadius: '50%', width: '300px', height: '300px' }}></div>
+      </div>
+      <div className="w-1/2 pr-8">
+        <h2 className="text-3xl font-bold mb-4">About Me</h2>
+        <p className="text-white max-w-lg font-medium">
+          Frontend Developer & UI/UX Designer<br /><br />
+          I craft seamless, user-centric digital experiences as a skilled frontend developer and UI/UX designer. With a keen eye for design and a mastery of modern technologies, I transform ideas into visually stunning, responsive websites that captivate and convert. My expertise includes:
+          - Building intuitive interfaces with HTML, CSS, and JavaScript.
+          - Designing pixel-perfect layouts using React and Tailwind CSS.
+          - Creating engaging user journeys that boost engagement and satisfaction.
+          - Delivering projects on time with a collaborative, client-focused approach.
+          Elevate your brand with my innovative solutions—let’s build something extraordinary together!
         </p>
-      </section>
-    );
+        <a href="#" className="mt-6 inline-block btn">Hire Me</a>
+      </div>
+    </div>
+  </section>
+);
 
     const Skills = () => (
-      <section id="skills" className="py-6 bg-gray-100 text-center">
-        <h2 className="text-2xl font-bold mt-4 mb-4 ">Skills</h2>
-        <div className="grid grid-cols-4 gap-4 max-w-4xl mx-auto">
-          <div className="skill-img-container">
-            <img src="assests/Html.png" alt="HTML" className="max-w-full max-h-full object-contain" />
+      <section id="skills" className="py-10 bg-[#1a1a1a] text-center">
+        <h2 className="text-3xl font-bold mb-8 text-white">Skills</h2>
+        <div className="grid grid-cols-4 gap-6 max-w-5xl mx-auto px-4">
+          <div className="skill-item flex flex-col items-center">
+            <div className="skill-icon" style={{ backgroundImage: 'url("assests/Html.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
+            <p className="mt-2 text-white text-sm">HTML</p>
           </div>
-          <div className="skill-img-container">
-            <img src="assests/Css.png" alt="CSS" className="max-w-full max-h-full object-contain" />
+          <div className="skill-item flex flex-col items-center">
+            <div className="skill-icon" style={{ backgroundImage: 'url("assests/Css.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
+            <p className="mt-2 text-white text-sm">CSS</p>
           </div>
-          <div className="skill-img-container">
-            <img src="assests/javascript.png" alt="JavaScript" className="max-w-full max-h-full object-contain" />
+          <div className="skill-item flex flex-col items-center">
+            <div className="skill-icon" style={{ backgroundImage: 'url("assests/javascript.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
+            <p className="mt-2 text-white text-sm">JavaScript</p>
           </div>
-          <div className="skill-img-container">
-            <img src="assests/react.png" alt="React" className="max-w-full max-h-full object-contain" />
+          <div className="skill-item flex flex-col items-center">
+            <div className="skill-icon" style={{ backgroundImage: 'url("assests/react.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
+            <p className="mt-2 text-white text-sm">React</p>
           </div>
-          <div className="skill-img-container">
-            <img src="assests/Nodejs.png" alt="Node.js" className="max-w-full max-h-full object-contain" />
+          <div className="skill-item flex flex-col items-center">
+            <div className="skill-icon" style={{ backgroundImage: 'url("assests/Nodejs.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
+            <p className="mt-2 text-white text-sm">Node.js</p>
           </div>
-          <div className="skill-img-container">
-            <img src="assests/Git.png" alt="Git" className="max-w-full max-h-full object-contain" />
+          <div className="skill-item flex flex-col items-center">
+            <div className="skill-icon" style={{ backgroundImage: 'url("assests/Git.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
+            <p className="mt-2 text-white text-sm">Git</p>
           </div>
-          <div className="skill-img-container">
-            <img src="assests/Tailwind.png" alt="Tailwind" className="max-w-full max-h-full object-contain" />
+          <div className="skill-item flex flex-col items-center">
+            <div className="skill-icon" style={{ backgroundImage: 'url("assests/Tailwind.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
+            <p className="mt-2 text-white text-sm">Tailwind</p>
           </div>
-          <div className="skill-img-container">
-            <img src="assests/VsCode.png" alt="VS Code" className="max-w-full max-h-full object-contain" />
+          <div className="skill-item flex flex-col items-center">
+            <div className="skill-icon" style={{ backgroundImage: 'url("assests/VsCode.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
+            <p className="mt-2 text-white text-sm">VS Code</p>
           </div>
         </div>
       </section>
     );
 
     const Project = () => (
-      <section id="project" className="py-10 bg-gray-200 text-center">
+      <section id="project" className="py-10 bg-black-200 text-white text-center">
         <h2 className="text-2xl font-bold mt-4 mb-4">Project</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <div className="project-img h-48 rounded-lg"></div>
@@ -200,19 +306,18 @@
     );
 
     const Contact = () => (
-      <section id="contact" className="py-10 bg-gray-100 text-center">
-        <h2 className="text-2xl font-bold mb-6">Contact</h2>
+      <section id="contact" className="py-10 bg-[#1a1a1a] text-center">
+        <h2 className="text-2xl font-bold mb-6 text-white">Contact</h2>
         <form className="max-w-md mx-auto space-y-4">
-          <input type="text" placeholder="Name" className="w-full p-2 bg-white border border-gray-300 rounded font-medium" />
-          <input type="email" placeholder="Email" className="w-full p-2 bg-white border border-gray-300 rounded font-medium" />
-          <textarea placeholder="Message" className="w-full p-2 bg-white border border-gray-300 rounded h-24 font-medium"></textarea>
-          <button type="submit" className="w-full bg-black text-white p-2 rounded hover:bg-gray-800 font-semibold">Send</button>
+          <input type="text" placeholder="Name" className="w-full p-2 bg-gray-800 border border-gray-600 rounded text-white font-medium" />
+          <input type="email" placeholder="Email" className="w-full p-2 bg-gray-800 border border-gray-600 rounded text-white font-medium" />
+          <textarea placeholder="Message" className="w-full p-2 bg-gray-800 border border-gray-600 rounded h-24 text-white font-medium"></textarea>
+          <button type="submit" className="w-full p-2 bg-black border border-white rounded hover:bg-gray-900 font-semibold">Send</button>
         </form>
       </section>
     );
-
     const Footer = () => (
-      <footer className="bg-gray-200 p-4 text-center">
+      <footer className="bg-black-200 text-white p-4 text-center">
         <p className="font-medium">© 2025 Biraj. All rights reserved.</p>
       </footer>
     );
@@ -273,4 +378,5 @@
     root.render(<App />);
   </script>
 </body>
+
 </html>
