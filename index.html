@@ -8,58 +8,61 @@
   <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/framer-motion@11.11.9/dist/framer-motion.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-  <!-- style -->
+  <!-- Style -->
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #1a1a1a;
+      font-family: 'Inter', sans-serif;
+      background-color: #121212;
       color: #fff;
+      margin: 0;
     }
 
     .profile-img {
-      background-image: url("assests/PortfolioProfile.jpeg");
       background-size: cover;
       background-position: center;
       border-radius: 50%;
-      width: 300px;
-      height: 300px;
+      width: 320px;
+      height: 320px;
+      border: 4px solid #10b981;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
 
-    .portfolio-img {
-      background-image: url("assests/PortfolioProfile.jpeg");
+    .project-img {
       background-size: cover;
       background-position: center;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .project-img:hover {
+      transform: scale(1.05);
     }
 
     .skill-img-container {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      border-radius: 10px;
+      background-color: #2a2a2a;
+      transition: transform 0.3s ease;
     }
 
-    .skill-img-container img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-
-    .header-curve {
-      clip-path: none;
-      /* Remove curve for simplicity */
+    .skill-img-container:hover {
+      transform: scale(1.1);
     }
 
     .go-to-top {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background-color: #f28c38;
+      background-color: #10b981;
       color: #fff;
       width: 50px;
       height: 50px;
@@ -69,7 +72,7 @@
       justify-content: center;
       cursor: pointer;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, background-color 0.3s ease;
       z-index: 1000;
     }
 
@@ -78,7 +81,7 @@
     }
 
     .go-to-top:hover {
-      background-color: #d8702b;
+      background-color: #059669;
     }
 
     .page-content {
@@ -86,15 +89,15 @@
     }
 
     .page-content.fade-out {
-      opacity: 1;
+      opacity: 0.7;
     }
 
     .header-content {
-      padding: 50px 0;
+      padding: 80px 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
+      gap: 4rem;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -104,81 +107,80 @@
       flex: 1;
     }
 
-    .header-text p {
-      font-size: 2rem;
-      color: #f28c38;
-
-    }
-
     .social-icons a {
       color: #fff;
-      margin: 0 10px;
+      margin: 0 12px;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
     }
 
     .social-icons a:hover {
-      color: #f28c38;
+      color: #10b981;
     }
 
     .stat-box {
-      display: inline-block;
       margin: 20px 15px;
-      padding: 10px 20px;
+      padding: 15px 25px;
       background-color: #2a2a2a;
-      border-radius: 5px;
+      border-radius: 8px;
       text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
     .stat-box span {
       display: block;
-      font-size: 1.5rem;
-      color: #f28c38;
+      font-size: 1.8rem;
+      color: #10b981;
+      font-family: 'Poppins', sans-serif;
     }
 
     .btn {
       display: inline-block;
-      padding: 10px 20px;
-      background-color: #f28c38;
+      padding: 12px 24px;
+      background-color: #10b981;
       color: #fff;
       text-decoration: none;
-      border-radius: 5px;
-      margin: 10px;
+      border-radius: 50px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
     .btn:hover {
-      background-color: #d8702b;
+      background-color: #059669;
+      transform: translateY(-2px);
     }
 
     nav {
       background-color: #1a1a1a;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
+      padding: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
     nav a {
       color: #fff;
       text-decoration: none;
+      font-family: 'Poppins', sans-serif;
       font-weight: 600;
+      margin: 0 1.5rem;
+      transition: color 0.3s ease;
     }
 
     nav a:hover {
-      color: #f28c38;
-    }
-
-    .skill-item {
-      transition: transform 0.2s ease;
-    }
-
-    .skill-item:hover {
-      transform: scale(1.1);
+      color: #10b981;
     }
   </style>
 </head>
 
-<body className="bg-gray-500 text-black">
+<body>
   <div id="root"></div>
   <script type="text/babel">
+    // Ensure motion is defined from the global Framer Motion object
+    const { motion } = window.FramerMotion || {};
+
     const Navbar = () => {
       const handleNavClick = (e, sectionId) => {
         e.preventDefault();
@@ -195,130 +197,331 @@
       };
 
       return (
-        <nav>
-          <a href="#about" onClick={(e) => handleNavClick(e, '#about')}>About me</a>
+        <nav className="flex justify-center gap-8">
+          <a href="#about" onClick={(e) => handleNavClick(e, '#about')}>About</a>
           <a href="#skills" onClick={(e) => handleNavClick(e, '#skills')}>Skills</a>
-          <a href="#project" onClick={(e) => handleNavClick(e, '#project')}>Project</a>
+          <a href="#project" onClick={(e) => handleNavClick(e, '#project')}>Projects</a>
           <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contact</a>
         </nav>
       );
     };
 
     const Header = () => (
-      <header id="home" className="bg-black-200 text-white">
+      <header id="home" className="bg-[#1a1a1a] text-white">
         <div className="header-content ml-20">
-          <div className="header-text">
-            <div className="text-4xl mb-2 font-light">Hi, I am</div>
-            <h1 className="text-5xl font-bold mb-4">Birajman Dura</h1>
-            <p className="text-lg mb-4 font-medium">Front-end Developer / UI Designer</p>
-            <div className="social-icons flex space-x-4 mb-4">
-              <a href="https://github.com" className="hover:text-orange-500"><i className="fab fa-github"></i></a>
-              <a href="https://linkedin.com" className="hover:text-orange-500"><i className="fab fa-linkedin"></i></a>
+          {motion ? (
+            <motion.div
+              className="header-text"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="text-2xl mb-2 font-light">Hi, I'm</div>
+              <h1 className="text-5xl font-bold mb-4 font-poppins">Birajman Dura</h1>
+              <p className="text-xl mb-6 font-medium text-emerald-400">Front-end Developer & UI/UX Designer</p>
+              <div className="social-icons flex mb-6">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-github"></i></a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin"></i></a>
+              </div>
+              <div className="flex">
+                <a href="#contact" className="btn">Hire Me</a>
+              </div>
+              <div className="flex mt-8">
+                <div className="stat-box"><span>1+</span>Years Experience</div>
+                <div className="stat-box"><span>5+</span>Projects Completed</div>
+              </div>
+            </motion.div>
+          ) : (
+            <div className="header-text">
+              <div className="text-2xl mb-2 font-light">Hi, I'm</div>
+              <h1 className="text-5xl font-bold mb-4 font-poppins">Birajman Dura</h1>
+              <p className="text-xl mb-6 font-medium text-emerald-400">Frontend Developer & UI/UX Designer</p>
+              <div className="social-icons flex mb-6">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-github"></i></a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin"></i></a>
+              </div>
+              <div className="flex">
+                <a href="#contact" className="btn">Hire Me</a>
+              </div>
+              <div className="flex ml-0">
+                <div className="stat-box"><span>1+</span>Years Experience</div>
+                <div className="stat-box"><span>5+</span>Projects Completed</div>
+              </div>
             </div>
-            <div className="flex">
-              <a href="#contact" className="btn">Hire Me</a>
-              <a href="#" className="btn">Download CV</a>
-            </div>
-            <div className="flex mt-6">
-              <div className="stat-box"><span>5+</span>Experiences</div>
-              <div className="stat-box"><span>20+</span>Project done</div>
-              <div className="stat-box"><span>80+</span>Happy Clients</div>
-            </div>
-          </div>
-          <div className="profile-img mr-20"></div>
+          )}
+          {motion ? (
+            <motion.div
+              className="profile-img mr-20"
+              style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            ></motion.div>
+          ) : (
+            <div
+              className="profile-img mr-20"
+              style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
+            ></div>
+          )}
         </div>
       </header>
     );
 
-   const About = () => (
-  <section id="about" className="py-10 bg-[#1a1a1a] text-white">
-    <div className="max-w-6xl mx-auto flex items-center justify-between px-4">
-      <div className="w-1/2">
-        <div className="profile-img bg-gray-600" style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")', borderRadius: '50%', width: '300px', height: '300px' }}></div>
-      </div>
-      <div className="w-1/2 pr-8">
-        <h2 className="text-3xl font-bold mb-4">About Me</h2>
-        <p className="text-white max-w-lg font-medium">
-          Frontend Developer & UI/UX Designer<br /><br />
-          I craft seamless, user-centric digital experiences as a skilled frontend developer and UI/UX designer. With a keen eye for design and a mastery of modern technologies, I transform ideas into visually stunning, responsive websites that captivate and convert. My expertise includes:
-          - Building intuitive interfaces with HTML, CSS, and JavaScript.
-          - Designing pixel-perfect layouts using React and Tailwind CSS.
-          - Creating engaging user journeys that boost engagement and satisfaction.
-          - Delivering projects on time with a collaborative, client-focused approach.
-          Elevate your brand with my innovative solutions—let’s build something extraordinary together!
-        </p>
-        <a href="#" className="mt-6 inline-block btn">Hire Me</a>
-      </div>
-    </div>
-  </section>
-);
-
-    const Skills = () => (
-      <section id="skills" className="py-10 bg-[#1a1a1a] text-center">
-        <h2 className="text-3xl font-bold mb-8 text-white">Skills</h2>
-        <div className="grid grid-cols-4 gap-6 max-w-5xl mx-auto px-4">
-          <div className="skill-item flex flex-col items-center">
-            <div className="skill-icon" style={{ backgroundImage: 'url("assests/Html.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
-            <p className="mt-2 text-white text-sm">HTML</p>
-          </div>
-          <div className="skill-item flex flex-col items-center">
-            <div className="skill-icon" style={{ backgroundImage: 'url("assests/Css.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
-            <p className="mt-2 text-white text-sm">CSS</p>
-          </div>
-          <div className="skill-item flex flex-col items-center">
-            <div className="skill-icon" style={{ backgroundImage: 'url("assests/javascript.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
-            <p className="mt-2 text-white text-sm">JavaScript</p>
-          </div>
-          <div className="skill-item flex flex-col items-center">
-            <div className="skill-icon" style={{ backgroundImage: 'url("assests/react.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
-            <p className="mt-2 text-white text-sm">React</p>
-          </div>
-          <div className="skill-item flex flex-col items-center">
-            <div className="skill-icon" style={{ backgroundImage: 'url("assests/Nodejs.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
-            <p className="mt-2 text-white text-sm">Node.js</p>
-          </div>
-          <div className="skill-item flex flex-col items-center">
-            <div className="skill-icon" style={{ backgroundImage: 'url("assests/Git.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
-            <p className="mt-2 text-white text-sm">Git</p>
-          </div>
-          <div className="skill-item flex flex-col items-center">
-            <div className="skill-icon" style={{ backgroundImage: 'url("assests/Tailwind.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
-            <p className="mt-2 text-white text-sm">Tailwind</p>
-          </div>
-          <div className="skill-item flex flex-col items-center">
-            <div className="skill-icon" style={{ backgroundImage: 'url("assests/VsCode.png")', backgroundSize: 'cover', backgroundPosition: 'center', width: '80px', height: '80px', borderRadius: '10px' }}></div>
-            <p className="mt-2 text-white text-sm">VS Code</p>
-          </div>
+    const About = () => (
+      <section id="about" className="py-16 bg-[#1a1a1a] text-white">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 gap-12">
+          {motion ? (
+            <motion.div
+              className="w-full md:w-1/2 flex justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div
+                className="profile-img"
+                style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
+              ></div>
+            </motion.div>
+          ) : (
+            <div className="w-full md:w-1/2 flex justify-center">
+              <div
+                className="profile-img"
+                style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
+              ></div>
+            </div>
+          )}
+          {motion ? (
+            <motion.div
+              className="w-full md:w-1/2"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <h2 className="text-4xl font-bold mb-6 font-poppins text-emerald-400">About Me</h2>
+              <p className="text-lg font-inter text-gray-200 mb-6 leading-relaxed">
+                I'm a passionate <span className="font-semibold">Frontend Developer</span> and <span className="font-semibold">UI/UX Designer</span> dedicated to crafting seamless, user-centric digital experiences. With a blend of creativity and technical expertise, I transform ideas into visually stunning, responsive websites that engage and inspire.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 font-inter mb-6 space-y-2">
+                <li>Build intuitive interfaces with HTML, CSS, JavaScript, and React.</li>
+                <li>Design pixel-perfect layouts using Tailwind CSS.</li>
+                <li>Create engaging user journeys to boost satisfaction and retention.</li>
+                <li>Deliver projects on time with a collaborative, client-focused approach.</li>
+              </ul>
+              <p className="text-lg font-inter text-gray-200 mb-8">
+                Let’s elevate your brand with innovative solutions—together, we can build something extraordinary!
+              </p>
+              <a href="#contact" className="btn">Hire Me</a>
+            </motion.div>
+          ) : (
+            <div className="w-full md:w-1/2">
+              <h2 className="text-4xl font-bold mb-6 font-poppins text-emerald-400">About Me</h2>
+              <p className="text-lg font-inter text-gray-200 mb-6 leading-relaxed">
+                I'm a passionate <span className="font-semibold">Frontend Developer</span> and <span className="font-semibold">UI/UX Designer</span> dedicated to crafting seamless, user-centric digital experiences. With a blend of creativity and technical expertise, I transform ideas into visually stunning, responsive websites that engage and inspire.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 font-inter mb-6 space-y-2">
+                <li>Build intuitive interfaces with HTML, CSS, JavaScript, and React.</li>
+                <li>Design pixel-perfect layouts using Tailwind CSS.</li>
+                <li>Create engaging user journeys to boost satisfaction and retention.</li>
+                <li>Deliver projects on time with a collaborative, client-focused approach.</li>
+              </ul>
+              <p className="text-lg font-inter text-gray-200 mb-8">
+                Let’s elevate your brand with innovative solutions—together, we can build something extraordinary!
+              </p>
+              <a href="#contact" className="btn">Hire Me</a>
+            </div>
+          )}
         </div>
       </section>
     );
 
+  const Skills = () => (  
+  <section id="skills" className="py-16 bg-[#121212] text-center">
+    {motion ? (
+      <motion.h2
+        className="text-4xl font-bold mb-10 font-poppins text-emerald-400"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        Skills
+      </motion.h2>
+    ) : (
+      <h2 className="text-4xl font-bold mb-10 font-poppins text-emerald-400">Skills</h2>
+    )}
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 max-w-5xl mx-auto px-6">
+      {[
+        { name: 'HTML', icon: 'assests/Html.png' },
+        { name: 'CSS', icon: 'assests/Css.png' },
+        { name: 'JavaScript', icon: 'assests/javascript.png' },
+        { name: 'React', icon: 'assests/react.png' },
+        { name: 'Node.js', icon: 'assests/Nodejs.png' },
+        { name: 'Git', icon: 'assests/Git.png' },
+        { name: 'Tailwind', icon: 'assests/Tailwind.png' },
+        { name: 'VS Code', icon: 'assests/VsCode.png' },
+      ].map((skill, index) => (
+        motion ? (
+          <motion.div
+            key={skill.name}
+            className="flex flex-col items-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+          >
+            <div className="skill-img-container">
+              <img
+                src={skill.icon}
+                alt={`${skill.name} icon`}
+                className="w-full h-full object-cover rounded-lg"
+              />
+            </div>
+            <p className="mt-3 text-gray-300 font-inter">{skill.name}</p>
+          </motion.div>
+        ) : (
+          <div
+            key={skill.name}
+            className="flex flex-col items-center"
+          >
+            <div className="skill-img-container">
+              <img
+                src={skill.icon}
+                alt={`${skill.name} icon`}
+                className="w-full h-full object-cover rounded-lg"
+              />
+            </div>
+            <p className="mt-3 text-gray-300 font-inter">{skill.name}</p>
+          </div>
+        )
+      ))}
+    </div>
+  </section>
+);
+
     const Project = () => (
-      <section id="project" className="py-10 bg-black-200 text-white text-center">
-        <h2 className="text-2xl font-bold mt-4 mb-4">Project</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          <div className="project-img h-48 rounded-lg"></div>
-          <div className="project-img h-48 rounded-lg"></div>
-          <div className="project-img h-48 rounded-lg"></div>
-          <div className="project-img h-48 rounded-lg"></div>
+      <section id="project" className="py-16 bg-[#1a1a1a] text-center">
+        {motion ? (
+          <motion.h2
+            className="text-4xl font-bold mb-10 font-poppins text-emerald-400"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Projects
+          </motion.h2>
+        ) : (
+          <h2 className="text-4xl font-bold mb-10 font-poppins text-emerald-400">Projects</h2>
+        )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto px-6">
+          {[
+            { id: 1, title: 'Project 1', description: 'A modern web app built with React and Tailwind CSS.' },
+            { id: 2, title: 'Project 2', description: 'E-commerce platform with Node.js backend.' },
+            { id: 3, title: 'Project 3', description: 'Portfolio website with smooth animations.' },
+            { id: 4, title: 'Project 4', description: 'UI/UX design for a mobile app.' },
+          ].map((project, index) => (
+            motion ? (
+              <motion.div
+                key={project.id}
+                className="bg-[#2a2a2a] rounded-lg p-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <div
+                  className="project-img h-48 mb-4"
+                  style={{ backgroundImage: 'url("/assests/PortfolioProfile.jpeg")' }}
+                ></div>
+                <h3 className="text-xl font-poppins font-semibold mb-2">{project.title}</h3>
+                <p className="text-gray-300 font-inter">{project.description}</p>
+              </motion.div>
+            ) : (
+              <div
+                key={project.id}
+                className="bg-[#2a2a2a] rounded-lg p-4"
+              >
+                <div
+                  className="project-img h-48 mb-4"
+                  style={{ backgroundImage: 'url("/assests/PortfolioProfile.jpeg")' }}
+                ></div>
+                <h3 className="text-xl font-poppins font-semibold mb-2">{project.title}</h3>
+                <p className="text-gray-300 font-inter">{project.description}</p>
+              </div>
+            )
+          ))}
         </div>
       </section>
     );
 
     const Contact = () => (
-      <section id="contact" className="py-10 bg-[#1a1a1a] text-center">
-        <h2 className="text-2xl font-bold mb-6 text-white">Contact</h2>
-        <form className="max-w-md mx-auto space-y-4">
-          <input type="text" placeholder="Name" className="w-full p-2 bg-gray-800 border border-gray-600 rounded text-white font-medium" />
-          <input type="email" placeholder="Email" className="w-full p-2 bg-gray-800 border border-gray-600 rounded text-white font-medium" />
-          <textarea placeholder="Message" className="w-full p-2 bg-gray-800 border border-gray-600 rounded h-24 text-white font-medium"></textarea>
-          <button type="submit" className="w-full p-2 bg-black border border-white rounded hover:bg-gray-900 font-semibold">Send</button>
-        </form>
+      <section id="contact" className="py-16 bg-[#121212] text-center">
+        {motion ? (
+          <motion.h2
+            className="text-4xl font-bold mb-10 font-poppins text-emerald-400"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Contact Me
+          </motion.h2>
+        ) : (
+          <h2 className="text-4xl font-bold mb-10 font-poppins text-emerald-400">Contact Me</h2>
+        )}
+        {motion ? (
+          <motion.form
+            className="max-w-md mx-auto space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <input
+              type="text"
+              placeholder="Name"
+              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg text-white font-inter focus:outline-none focus:border-emerald-500"
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg text-white font-inter focus:outline-none focus:border-emerald-500"
+            />
+            <textarea
+              placeholder="Message"
+              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg h-32 text-white font-inter focus:outline-none focus:border-emerald-500"
+            ></textarea>
+            <button
+              type="submit"
+              className="w-full p-3 bg-emerald-500 text-white font-poppins font-semibold rounded-lg hover:bg-emerald-600 transition duration-300"
+            >
+              Send Message
+            </button>
+          </motion.form>
+        ) : (
+          <form className="max-w-md mx-auto space-y-6">
+            <input
+              type="text"
+              placeholder="Name"
+              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg text-white font-inter focus:outline-none focus:border-emerald-500"
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg text-white font-inter focus:outline-none focus:border-emerald-500"
+            />
+            <textarea
+              placeholder="Message"
+              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg h-32 text-white font-inter focus:outline-none focus:border-emerald-500"
+            ></textarea>
+            <button
+              type="submit"
+              className="w-full p-3 bg-emerald-500 text-white font-poppins font-semibold rounded-lg hover:bg-emerald-600 transition duration-300"
+            >
+              Send Message
+            </button>
+          </form>
+        )}
       </section>
     );
+
     const Footer = () => (
-      <footer className="bg-black-200 text-white p-4 text-center">
-        <p className="font-medium">© 2025 Biraj. All rights reserved.</p>
+      <footer className="bg-[#1a1a1a] text-white p-6 text-center">
+        <p className="font-inter text-gray-300">© 2025 Birajman Dura. All rights reserved.</p>
       </footer>
     );
 
@@ -326,21 +529,14 @@
       const [isVisible, setIsVisible] = React.useState(false);
 
       const toggleVisibility = () => {
-        if (window.scrollY > 300) {
-          setIsVisible(true);
-        } else {
-          setIsVisible(false);
-        }
+        setIsVisible(window.scrollY > 300);
       };
 
       const scrollToTop = () => {
         const pageContent = document.querySelector('.page-content');
         pageContent.classList.add('fade-out');
         setTimeout(() => {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-          });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
           pageContent.classList.remove('fade-out');
         }, 300);
       };
