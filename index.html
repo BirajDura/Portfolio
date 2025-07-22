@@ -8,7 +8,6 @@
   <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/framer-motion@11.11.9/dist/framer-motion.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -17,9 +16,33 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #121212;
+      background: url('assests/Bg.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: #fff;
       margin: 0;
+    }
+
+    .content-overlay {
+      background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for readability */
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .section {
+      opacity: 0;
+      transform: translateX(-100%);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Ensure sections are visible on page load */
+    .section.initial {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     .profile-img {
@@ -37,6 +60,7 @@
       background-position: center;
       border-radius: 10px;
       transition: transform 0.3s ease;
+      /* background-color: hsl(186, 61%, 13%); Added same background color as stat-box */
     }
 
     .project-img:hover {
@@ -119,9 +143,9 @@
     }
 
     .stat-box {
-      margin: 20px 15px;
-      padding: 15px 25px;
-      background-color: #2a2a2a;
+      margin: 10px 5px;
+      padding: 10px 15px;
+      background-color: hsl(186, 61%, 13%);
       border-radius: 8px;
       text-align: center;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -152,12 +176,11 @@
     }
 
     nav {
-      background-color: #1a1a1a;
+      background-color: transparent;
       padding: 1.5rem;
-      position: sticky;
+      position: relative;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
     nav a {
@@ -170,7 +193,7 @@
     }
 
     nav a:hover {
-      color: #10b981;
+      color: #064f37;
     }
   </style>
 </head>
@@ -178,9 +201,6 @@
 <body>
   <div id="root"></div>
   <script type="text/babel">
-    // Ensure motion is defined from the global Framer Motion object
-    const { motion } = window.FramerMotion || {};
-
     const Navbar = () => {
       const handleNavClick = (e, sectionId) => {
         e.preventDefault();
@@ -197,346 +217,158 @@
       };
 
       return (
-        <nav className="flex justify-center gap-8">
-          <a href="#about" onClick={(e) => handleNavClick(e, '#about')}>About Me</a>
-          <a href="#skills" onClick={(e) => handleNavClick(e, '#skills')}>Skills</a>
-          <a href="#project" onClick={(e) => handleNavClick(e, '#project')}>Projects</a>
-          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contact</a>
-        </nav>
-      );
-    };
+    <div className="bg-blue-300 bg-opacity-10 rounded-full p-0.5 p-0.5 mx-2">
+      <nav className="flex justify-center gap-8 text-white">
+        <a href="#about" onClick={(e) => handleNavClick(e, '#about')} className="hover:text-emerald-200">About Me</a>
+        <a href="#skills" onClick={(e) => handleNavClick(e, '#skills')} className="hover:text-emerald-200">Skills</a>
+        <a href="#project" onClick={(e) => handleNavClick(e, '#project')} className="hover:text-emerald-200">Projects</a>
+        <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="hover:text-emerald-200">Contact</a>
+      </nav>
+    </div>
+  );
+};
 
     const Header = () => (
-      <header id="home" className="bg-[#1a1a1a] text-white">
+      <header id="home" className="section initial">
         <div className="header-content ml-20">
-          {motion ? (
-            <motion.div
-              className="header-text"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="text-2xl mb-2 font-light">Hi, I'm</div>
-              <h1 className="text-5xl font-bold mb-4 font-poppins">Birajman Dura</h1>
-              <p className="text-xl mb-6 font-medium text-emerald-400">Front-end Developer & UI/UX Designer</p>
-              <div className="social-icons flex mb-6">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-github"></i></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin"></i></a>
-              </div>
-              <div className="flex">
-                <a href="#contact" className="btn">Hire Me</a>
-              </div>
-              <div className="flex mt-8">
-                <div className="stat-box"><span>1+</span>Years Experience</div>
-                <div className="stat-box"><span>5+</span>Project Completed</div>
-              </div>
-            </motion.div>
-          ) : (
-            <div className="header-text">
-              <div className="text-2xl mb-2 font-light">Hi, I'm</div>
-              <h1 className="text-5xl font-bold mb-4 font-poppins">Birajman Dura</h1>
-              <p className="text-xl mb-6 font-medium text-emerald-400">Frontend Developer & UI/UX Designer</p>
-              <div className="social-icons flex mb-6">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-github"></i></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin"></i></a>
-              </div>
-              <div className="flex">
-                <a href="#contact" className="btn">Hire Me</a>
-              </div>
-              <div className="flex ml-0">
-                <div className="stat-box"><span>1+</span>Years Experience</div>
-                <div className="stat-box"><span>5+</span>Projects Completed</div>
-              </div>
+          <div className="header-text">
+            <div className="text-2xl mb-2 font-light">Hi, I'm</div>
+            <h1 className="text-5xl font-bold mb-4 font-poppins">Birajman Dura</h1>
+            <p className="text-xl mb-6 font-medium text-emerald-400">Frontend Developer & UI/UX Designer</p>
+            <div className="social-icons flex mb-6">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-github"></i></a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin"></i></a>
             </div>
-          )}
-          {motion ? (
-            <motion.div
-              className="profile-img mr-20"
-              style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            ></motion.div>
-          ) : (
-            <div
-              className="profile-img mr-20"
-              style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
-            ></div>
-          )}
+            <div className="flex">
+              <a href="#contact" className="btn">Hire Me</a>
+            </div>
+            <div className="flex mt-8">
+              <div className="stat-box"><span>1+</span>Years Experience</div>
+              <div className="stat-box"><span>5+</span>Projects Completed</div>
+            </div>
+          </div>
+          <div
+            className="profile-img mr-20"
+            style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
+          ></div>
         </div>
       </header>
     );
 
     const About = () => (
-      <section id="about" className="py-16 bg-[#1a1a1a] text-white">
+      <section id="about" className="section initial">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 gap-12">
-          {motion ? (
-            <motion.div
-              className="w-full md:w-1/2 flex justify-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div
-                className="profile-img"
-                style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
-              ></div>
-            </motion.div>
-          ) : (
-            <div className="w-full md:w-1/2 flex justify-center">
-              <div
-                className="profile-img"
-                style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
-              ></div>
-            </div>
-          )}
-          {motion ? (
-            <motion.div
-              className="w-full md:w-1/2"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <h2 className="text-4xl font-bold mb-6 font-poppins text-emerald-400">About Me</h2>
-              <p className="text-lg font-inter text-gray-200 mb-6 leading-relaxed">
-                I'm a passionate <span className="font-semibold">Frontend Developer</span> and
-                 <span className="font-semibold">UI/UX Designer</span>
-                  dedicated to crafting seamless and effortlessly 
-                 user centric digital experiences.
-                With a blend of creativity and technical expertise, 
-                I transform ideas into visually stunning, 
-                responsive websites that engage and inspire.
-              </p>
-              <ul className="list-disc list-inside text-gray-300 font-inter mb-6 space-y-2">
-                <li>Build intuitive interfaces with HTML, CSS, JavaScript, and React.</li>
-                <li>Design pixel-perfect layouts using Tailwind CSS.</li>
-                <li>Create engaging user journeys to boost satisfaction and retention.</li>
-                <li>Deliver projects on time with a collaborative, client-focused approach.</li>
-              </ul>
-              <p className="text-lg font-inter text-gray-200 mb-8">
-                Let’s elevate your brand with innovative solutions—together, 
-                we can build something extraordinary!
-              </p>
-              <a href="#contact" className="btn">Hire Me</a>
-            </motion.div>
-          ) : (
-            <div className="w-full md:w-1/2">
-              <h2 className="text-4xl font-bold mb-6 font-poppins text-emerald-400">About Me</h2>
-              <p className="text-lg font-inter text-gray-200 mb-6 leading-relaxed">
-                I'm a passionate <span className="font-semibold">Frontend Developer</span> 
-                and <span className="font-semibold">UI/UX Designer</span>
-                 dedicated to crafting seamless, 
-                 user-centric digital experiences. 
-                 With a blend of creativity and technical expertise, 
-                 I transform ideas into visually stunning, 
-                 responsive websites that engage and inspire.
-
-              </p>
-              <ul className="list-disc list-inside text-gray-300 font-inter mb-6 space-y-2">
-                <li>Build intuitive interfaces with HTML, CSS, JavaScript, and React.</li>
-                <li>Design pixel-perfect layouts using Tailwind CSS.</li>
-                <li>Create engaging user journeys to boost satisfaction and retention.</li>
-                <li>Deliver projects on time with a collaborative, client-focused approach.</li>
-              </ul>
-              <p className="text-lg font-inter text-gray-200 mb-8">
-                Let’s elevate your brand with innovative solutions—together, we can build something extraordinary!
-              </p>
-
-              <a href="#contact" className="btn">Hire Me</a> 
-              
-            </div>
-          )}
+          <div className="w-full md:w-1/2 flex justify-center">
+            <div
+              className="profile-img"
+              style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
+            ></div>
+          </div>
+          <div className="w-full md:w-1/2">
+            <h2 className="text-4xl font-bold mb-6 font-poppins text-emerald-400">About Me</h2>
+            <p className="text-lg font-inter text-gray-200 mb-6 leading-relaxed">
+              I'm a passionate <span className="font-semibold">Frontend Developer</span> and
+              <span className="font-semibold"> UI/UX Designer</span> dedicated to crafting seamless and effortlessly
+              user-centric digital experiences. With a blend of creativity and technical expertise, I transform ideas into
+              visually stunning, responsive websites that engage and inspire.
+            </p>
+            <ul className="list-disc list-inside text-gray-300 font-inter mb-6 space-y-2">
+              <li>Build intuitive interfaces with HTML, CSS, JavaScript, and React.</li>
+              <li>Design pixel-perfect layouts using Tailwind CSS.</li>
+              <li>Create engaging user journeys to boost satisfaction and retention.</li>
+              <li>Deliver projects on time with a collaborative, client-focused approach.</li>
+            </ul>
+            <p className="text-lg font-inter text-gray-200 mb-8">
+              Let’s elevate your brand with innovative solutions—together, we can build something extraordinary!
+            </p>
+            <a href="#contact" className="btn">Hire Me</a>
+          </div>
         </div>
       </section>
     );
 
-  const Skills = () => (  
-  <section id="skills" className="py-16 bg-[#121212] text-center">
-    {motion ? (
-      <motion.h2
-        className="text-4xl font-bold mb-10 font-poppins text-emerald-400"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        Skills
-      </motion.h2>
-    ) : (
-      <h2 className="text-4xl font-bold mb-10 font-poppins text-emerald-400">Skills</h2>
-    )}
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 max-w-5xl mx-auto px-6">
-      {[
-        { name: 'HTML', icon: 'assests/Html.png' },
-        { name: 'CSS', icon: 'assests/Css.png' },
-        { name: 'JavaScript', icon: 'assests/javascript.png' },
-        { name: 'React', icon: 'assests/react.png' },
-        { name: 'Node.js', icon: 'assests/Nodejs.png' },
-        { name: 'Git', icon: 'assests/Git.png' },
-        { name: 'Tailwind', icon: 'assests/Tailwind.png' },
-        { name: 'VS Code', icon: 'assests/VsCode.png' },
-      ].map((skill, index) => (
-        motion ? (
-          <motion.div
-            key={skill.name}
-            className="flex flex-col items-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-          >
-            <div className="skill-img-container">
-              <img
-                src={skill.icon}
-                alt={`${skill.name} icon`}
-                className="w-full h-full object-cover rounded-lg"
-              />
-            </div>
-            <p className="mt-3 text-gray-300 font-inter">{skill.name}</p>
-          </motion.div>
-        ) : (
-          <div
-            key={skill.name}
-            className="flex flex-col items-center"
-          >
-            <div className="skill-img-container">
-              <img
-                src={skill.icon}
-                alt={`${skill.name} icon`}
-                className="w-full h-full object-cover rounded-lg"
-              />
-            </div>
-            <p className="mt-3 text-gray-300 font-inter">{skill.name}</p>
-          </div>
-        )
-      ))}
-    </div>
-  </section>
-);
-
-    const Project = () => (
-      <section id="project" className="py-16 bg-[#1a1a1a] text-center">
-        {motion ? (
-          <motion.h2
-            className="text-4xl font-bold mb-10 font-poppins text-emerald-400"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            Projects
-          </motion.h2>
-        ) : (
-          <h2 className="text-4xl font-bold mb-10 font-poppins text-emerald-400">Projects</h2>
-        )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto px-6">
+    const Skills = () => (
+      <section id="skills" className="section initial">
+        <h2 className="text-4xl font-bold mt-12  mb-10 font-poppins text-center text-emerald-400">Skills</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 max-w-5xl mx-auto px-6">
           {[
-            { id: 1, title: 'HouseWare Hub', description: 'A modern ecommerce app built with React and Tailwind CSS.' },
-            { id: 2, title: 'Portfolio Template', description: 'Portfolio  using html and css' },
-            { id: 3, title: 'Coffe Shop', description: 'The website containing menu of coffee with smooth animations.' },
-            { id: 4, title: 'Hotel Booking ', description: 'Front-end with responsive website.' },
-          ].map((project, index) => (
-            motion ? (
-              <motion.div
-                key={project.id}
-                className="bg-[#2a2a2a] rounded-lg p-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <div
-                  className="project-img h-48 mb-4"
-                  style={{ backgroundImage: 'url("/assests/PortfolioProfile.jpeg")' }}
-                ></div>
-                <h3 className="text-xl font-poppins font-semibold mb-2">{project.title}</h3>
-                <p className="text-gray-300 font-inter">{project.description}</p>
-              </motion.div>
-            ) : (
-              <div
-                key={project.id}
-                className="bg-[#2a2a2a] rounded-lg p-4"
-              >
-                <div
-                  className="project-img h-48 mb-4"
-                  style={{ backgroundImage: 'url("/assests/PortfolioProfile.jpeg")' }}
-                ></div>
-                <h3 className="text-xl font-poppins font-semibold mb-2">{project.title}</h3>
-                <p className="text-gray-300 font-inter">{project.description}</p>
+            { name: 'HTML', icon: 'assests/Html.png' },
+            { name: 'CSS', icon: 'assests/Css.png' },
+            { name: 'JavaScript', icon: 'assests/javascript.png' },
+            { name: 'React', icon: 'assests/react.png' },
+            { name: 'Node.js', icon: 'assests/Nodejs.png' },
+            { name: 'Git', icon: 'assests/Git.png' },
+            { name: 'Tailwind', icon: 'assests/Tailwind.png' },
+            { name: 'VS Code', icon: 'assests/VsCode.png' },
+          ].map((skill) => (
+            <div key={skill.name} className="flex flex-col items-center">
+              <div className="skill-img-container">
+                <img
+                  src={skill.icon}
+                  alt={`${skill.name} icon`}
+                  className="w-full h-full object-cover rounded-lg"
+                />
               </div>
-            )
+              <p className="mt-3 text-gray-300 font-inter">{skill.name}</p>
+            </div>
           ))}
         </div>
       </section>
     );
 
+const Project = () => (
+  <section id="project" className="section initial">
+    <h2 className="text-4xl font-bold mb-10 mt-12 text-center font-poppins text-emerald-400">Projects</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto px-6">
+      {[
+        { id: 1, title: 'HouseWare Hub', description: 'A modern ecommerce app built with React and Tailwind CSS.' },
+        { id: 2, title: 'Portfolio Template', description: 'Portfolio using html and css' },
+        { id: 3, title: 'Coffee Shop', description: 'The website containing menu of coffee with smooth animations.' },
+        { id: 4, title: 'Hotel Booking', description: 'Front-end with responsive website.' },
+      ].map((project) => (
+        <div key={project.id} className="bg-[hsl(186,61%,13%)] rounded-lg p-4">
+          <div
+            className="project-img h-48 mb-4"
+            style={{ backgroundImage: 'url("/assests/PortfolioProfile.jpeg")' }}
+          ></div>
+          <h3 className="text-xl font-poppins font-semibold mb-2">{project.title}</h3>
+          <p className="text-gray-300 font-inter">{project.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
     const Contact = () => (
-      <section id="contact" className="py-16 bg-[#121212] text-center">
-        {motion ? (
-          <motion.h2
-            className="text-4xl font-bold mb-10 font-poppins text-emerald-400"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+      <section id="contact" className="section initial">
+        <h2 className="text-4xl mt-12 text-center font-bold mb-10 font-poppins text-emerald-400">Contact Me</h2>
+        <form className="max-w-md mx-auto space-y-6">
+          <input
+            type="text"
+            placeholder="Name"
+            className="w-full p-3 bg-[#ffffff] border border-gray-600 rounded-lg text-black font-inter focus:outline-none focus:border-emerald-500"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-3 bg-[#ffffff] border border-gray-600 rounded-lg text-black font-inter focus:outline-none focus:border-emerald-500"
+          />
+          <textarea
+            placeholder="Message"
+            className="w-full p-3 bg-[#ffffff] border border-gray-600 rounded-lg h-32 text-black font-inter focus:outline-none focus:border-emerald-500"
+          ></textarea>
+          <button
+            type="submit"
+            className="w-full p-3 bg-emerald-500 text-white font-poppins font-semibold rounded-lg hover:bg-emerald-600 transition duration-300"
           >
-            Contact Me
-          </motion.h2>
-        ) : (
-          <h2 className="text-4xl font-bold mb-10 font-poppins text-emerald-400">Contact Me</h2>
-        )}
-        {motion ? (
-          <motion.form
-            className="max-w-md mx-auto space-y-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <input
-              type="text"
-              placeholder="Name"
-              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg text-white font-inter focus:outline-none focus:border-emerald-500"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg text-white font-inter focus:outline-none focus:border-emerald-500"
-            />
-            <textarea
-              placeholder="Message"
-              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg h-32 text-white font-inter focus:outline-none focus:border-emerald-500"
-            ></textarea>
-            <button
-              type="submit"
-              className="w-full p-3 bg-emerald-500 text-white font-poppins font-semibold rounded-lg hover:bg-emerald-600 transition duration-300"
-            >
-              Send Message
-            </button>
-          </motion.form>
-        ) : (
-          <form className="max-w-md mx-auto space-y-6">
-            <input
-              type="text"
-              placeholder="Name"
-              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg text-white font-inter focus:outline-none focus:border-emerald-500"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg text-white font-inter focus:outline-none focus:border-emerald-500"
-            />
-            <textarea
-              placeholder="Message"
-              className="w-full p-3 bg-[#2a2a2a] border border-gray-600 rounded-lg h-32 text-white font-inter focus:outline-none focus:border-emerald-500"
-            ></textarea>
-            <button
-              type="submit"
-              className="w-full p-3 bg-emerald-500 text-white font-poppins font-semibold rounded-lg hover:bg-emerald-600 transition duration-300"
-            >
-              Send Message
-            </button>
-          </form>
-        )}
+            Send Message
+          </button>
+        </form>
       </section>
     );
 
     const Footer = () => (
-      <footer className="bg-[#1a1a1a] text-white p-6 text-center">
+      <footer className="bg-transparent text-white p-6 text-center">
         <p className="font-inter text-gray-300">© 2025 Birajman Dura. All rights reserved.</p>
       </footer>
     );
@@ -573,18 +405,40 @@
       );
     };
 
-    const App = () => (
-      <div className="page-content">
-        <Navbar />
-        <Header />
-        <About />
-        <Skills />
-        <Project />
-        <Contact />
-        <Footer />
-        <GoToTop />
-      </div>
-    );
+    const App = () => {
+      React.useEffect(() => {
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+          observer.observe(section);
+        });
+
+        // Ensure the first section is visible on load
+        sections[0].classList.add('visible');
+
+        return () => observer.disconnect();
+      }, []);
+
+      return (
+        <div className="page-content content-overlay">
+          <Navbar />
+          <Header />
+          <About />
+          <Skills />
+          <Project />
+          <Contact />
+          <Footer />
+          <GoToTop />
+        </div>
+      );
+    };
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
