@@ -72,7 +72,7 @@
           <div className="w-full md:w-1/2 flex justify-center">
             <div
               className="profile-img"
-              style={{ backgroundImage: 'url("assests/PortfolioProfile.jpeg")' }}
+              style={{ backgroundImage: 'url("assets/PortfolioProfile.jpeg")' }}
             ></div>
           </div>
           <div className="w-full md:w-1/2">
@@ -126,44 +126,49 @@
       </section>
     );
 
-const Project = () => (
-  <section id="project" className="section initial">
-    <h2 className="text-4xl font-bold mb-10 mt-12 text-center font-poppins text-emerald-400">Projects</h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto px-6">
-      {[
-        { 
-          id: 1, 
-          title: 'HouseWare Hub', 
-          description: 'A modern ecommerce app built with React and Tailwind CSS.', 
-          image: '/assets/House Ware.png' 
-        },
-        { 
-          id: 2, 
-          title: 'A Calculator', 
-          description: 'Build using html and css', 
-          image: '/assets/Calcu.JPG' 
-        },
-        // { 
-        //   id: 3, 
-        //   title: 'Coffee Shop', 
-        //   description: 'The website containing menu of coffee with smooth animations.', 
-        //   image: '/assests/CoffeeShop.jpeg' 
-        // },
-        
-      ].map((project) => (
-        <div key={project.id} className="bg-[hsl(186,61%,13%)] rounded-lg p-4">
-          <img 
-            src={project.image} 
-            alt={`${project.title} illustration`} 
-            className="w-full h-48 mb-4 rounded-lg object-cover"
-          />
-          <h3 className="text-xl font-poppins font-semibold mb-2">{project.title}</h3>
-          <p className="text-gray-300 font-inter">{project.description}</p>
+ const Project = () => (
+      <section id="project" className="section initial">
+        <h2 className="text-4xl font-bold mb-10 mt-12 text-center font-poppins text-emerald-400">Projects</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto px-6">
+          {[
+            { 
+              id: 1, 
+              title: 'HouseWare Hub', 
+              description: 'A modern ecommerce app built with React and Tailwind CSS.', 
+              image: '/assets/House Ware.png',
+              link: 'https://housewarehub.example.com'
+            },
+            { 
+              id: 2, 
+              title: 'A Calculator', 
+              description: 'Build using HTML and CSS.', 
+              image: '/assets/Calcu.JPG',
+              link: 'https://birajdura.github.io/Calculator/'
+            },
+          ].map((project) => (
+            <div key={project.id} className="bg-[hsl(186,61%,13%)] rounded-lg p-4">
+              <img 
+                src={project.image} 
+                alt={`${project.title} illustration`} 
+                className="w-full h-48 mb-4 rounded-lg object-cover"
+              />
+              <h3 className="text-xl font-poppins font-semibold mb-2">{project.title}</h3>
+              <p className="text-gray-300 font-inter mb-4">{project.description}</p>
+              <div className="flex justify-center">
+                <a 
+                  href={project.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-emerald-400 hover:text-emerald-200 font-inter bg-[hsl(186,61%,20%)] px-4 py-2 rounded-md"
+                >
+                  Visit Website
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  </section>
-);
+      </section>
+    );
 
 const Contact = () => (
   <section id="contact" className="section initial relative">
