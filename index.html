@@ -5,102 +5,183 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio - Biraj</title>
+
+  <!-- React CDN -->
   <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <link rel="stylesheet" href="index.css">
-  
-  
 </head>
 
 <body>
   <div id="root"></div>
+
   <script type="text/babel">
+
+    /* ------------------- NAVBAR ------------------- */
+
     const Navbar = () => {
-      const handleNavClick = (e, sectionId) => {
-        e.preventDefault();
-        const pageContent = document.querySelector('.page-content');
-        pageContent.classList.add('fade-out');
+  const [isOpen, setIsOpen] = React.useState(false);
 
-        setTimeout(() => {
-          const targetSection = document.querySelector(sectionId);
-          if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth' });
-          }
-          pageContent.classList.remove('fade-out');
-        }, 300);
-      };
+  const handleNavClick = (e, sectionId) => {
+    e.preventDefault();
 
-      return (
-    <div className="bg-blue-300 bg-opacity-10 rounded-full p-0.5 p-0.5 mx-2">
-      <nav className="flex justify-center gap-8 text-white">
+    const pageContent = document.querySelector('.page-content');
+    pageContent.classList.add('fade-out');
+
+    setTimeout(() => {
+      const targetSection = document.querySelector(sectionId);
+      if (targetSection) targetSection.scrollIntoView({ behavior: 'smooth' });
+      pageContent.classList.remove('fade-out');
+    }, 300);
+
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="relative z-50 bg-blue-300 bg-opacity-10 rounded-full p-1 mx-2">
+
+      {/* Desktop Navbar */}
+      <nav className="hidden md:flex justify-center gap-8 text-white py-2">
         <a href="#about" onClick={(e) => handleNavClick(e, '#about')} className="hover:text-emerald-200">About Me</a>
         <a href="#skills" onClick={(e) => handleNavClick(e, '#skills')} className="hover:text-emerald-200">Skills</a>
         <a href="#project" onClick={(e) => handleNavClick(e, '#project')} className="hover:text-emerald-200">Projects</a>
         <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="hover:text-emerald-200">Contact</a>
       </nav>
+
+      {/* Hamburger Button on RIGHT */}
+      <div className="md:hidden flex justify-end px-3 z-[9999] relative">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="text-white text-3xl focus:outline-none"
+        >
+          {isOpen ? '✖' : '☰'}
+        </button>
+      </div>
+
+      {/* Mobile Dropdown - aligned to RIGHT */}
+      <div
+        className={`
+          md:hidden flex flex-col items-start gap-4 text-white
+          bg-[#0f172a] bg-opacity-95 rounded-lg py-4 px-6 mt-2
+          absolute top-full right-0 w-48
+          transition-all duration-300
+          ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
+          z-[9999]
+        `}
+      >
+        <a href="#about" onClick={(e) => handleNavClick(e, '#about')} className="hover:text-emerald-200">About Me</a>
+        <a href="#skills" onClick={(e) => handleNavClick(e, '#skills')} className="hover:text-emerald-200">Skills</a>
+        <a href="#project" onClick={(e) => handleNavClick(e, '#project')} className="hover:text-emerald-200">Projects</a>
+        <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="hover:text-emerald-200">Contact</a>
+      </div>
+
     </div>
   );
 };
 
-    const Header = () => (
-      <header id="home" className="section initial">
-        <div className="header-content ml-20">
-          <div className="header-text">
-            <div className="text-2xl mb-2 font-light">Hi, I'm</div>
-            <h1 className="text-5xl font-bold mb-4 font-poppins">Birajman Dura</h1>
-            <p className="text-xl mb-6 font-medium text-emerald-400">Frontend Developer & Graphic Designer</p>
-            <div className="social-icons flex mb-6">
-              <a href="https://github.com/BirajDura" target="_blank" rel="noopener noreferrer"><i className="fab fa-github"></i></a>
-              <a href="https://www.linkedin.com/in/biraj-dura-068a41349/" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin"></i></a>
-            </div>
-          </div>
-          <div
-            className="profile-img mr-20"
-            style={{ backgroundImage: 'url("assets/PortfolioProfile.jpeg")' }}
-          ></div>
+
+    /* ------------------- HEADER ------------------- */
+
+   const Header = () => (
+  <header id="home" className="section initial">
+    <div
+      className="
+        header-content 
+        flex flex-col-reverse md:flex-row 
+        items-center 
+        justify-between 
+        px-6 md:px-12 
+        py-16 
+        gap-10 md:gap-20
+      "
+    >
+
+      {/* TEXT SECTION */}
+      <div className="header-text text-center md:text-left flex-1">
+        <div className="text-2xl mb-2 font-light">Hi, I'm</div>
+        <h1 className="text-5xl font-bold mb-4 font-poppins">Birajman Dura</h1>
+        <p className="text-xl mb-6 font-medium text-emerald-400">
+          Frontend Developer & Graphic Designer
+        </p>
+
+        <div className="social-icons flex justify-center md:justify-start mb-6 gap-6">
+          <a href="https://github.com/BirajDura" target="_blank">
+            <i className="fab fa-github text-3xl"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/biraj-dura-068a41349/" target="_blank">
+            <i className="fab fa-linkedin text-3xl"></i>
+          </a>
         </div>
-      </header>
-    );
+      </div>
+
+      {/* PROFILE IMAGE */}
+      <div className="flex justify-center flex-1">
+        <div
+          className="profile-img w-56 h-56 md:w-80 md:h-80"
+          style={{ backgroundImage: 'url("assets/PortfolioProfile.jpeg")' }}
+        ></div>
+      </div>
+
+    </div>
+  </header>
+);
+
+    /* ------------------- ABOUT ------------------- */
 
     const About = () => (
       <section id="about" className="section initial">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 gap-12">
+
           <div className="w-full md:w-1/2 flex justify-center">
-            <div
-              className="profile-img"
-              style={{ backgroundImage: 'url("assets/PortfolioProfile.jpeg")' }}
-            ></div>
+            <div className="profile-img" style={{ backgroundImage: 'url("assets/PortfolioProfile.jpeg")' }}></div>
           </div>
+
           <div className="w-full md:w-1/2">
-            <h2 className="text-4xl font-bold mb-6 font-poppins text-emerald-400">About Me</h2>
-            <p className="text-lg font-inter text-gray-200 mb-6 leading-relaxed">
-              I'm a passionate <span className="font-semibold">Frontend Developer</span> and
-              <span className="font-semibold"> Graphic Designer</span> dedicated to crafting seamless and effortlessly
-              user-centric digital experiences. With a blend of creativity and technical expertise, I transform ideas into
-              visually stunning, responsive websites that engage and inspire.
+            <h2 className="text-4xl font-bold mb-6 text-emerald-400">About Me</h2>
+
+            <p className="text-lg text-gray-200 mb-6">
+              I’m a passionate <span className="font-semibold">Frontend Developer</span> and
+              <span className="font-semibold"> Graphic Designer</span> dedicated to crafting seamless digital experiences.
             </p>
-            <ul className="list-disc list-inside text-gray-300 font-inter mb-6 space-y-2">
-              <li>Build intuitive interfaces with HTML, CSS, JavaScript, and React.</li>
-              <li>Design pixel-perfect layouts using Tailwind CSS.</li>
-              <li>Create engaging user journeys to boost satisfaction and retention.</li>
-              <li>Deliver projects on time with a collaborative, client-focused approach.</li>
+
+            <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+              <li>Build intuitive interfaces with HTML, CSS, JS, and React.</li>
+              <li>Design clean and modern layouts using Tailwind CSS.</li>
+              <li>Create smooth user journeys for better engagement.</li>
+              <li>Deliver on time with a client-focused approach.</li>
             </ul>
-            <p className="text-lg font-inter text-gray-200 mb-8">
-              Let’s elevate your brand with innovative solutions—together, we can build something extraordinary!
+
+            <p className="text-lg text-gray-200">
+              Let’s collaborate and build something extraordinary!
             </p>
+
           </div>
+
         </div>
       </section>
     );
 
+    /* ------------------- SKILLS ------------------- */
+
     const Skills = () => (
       <section id="skills" className="section initial">
-        <h2 className="text-4xl font-bold mt-12  mb-10 font-poppins text-center text-emerald-400">Skills</h2>
+        <h2 className="text-4xl font-bold mt-12 mb-10 text-center text-emerald-400">Skills</h2>
+
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 max-w-5xl mx-auto px-6">
+
           {[
             { name: 'HTML', icon: 'assets/Html.png' },
             { name: 'CSS', icon: 'assets/Css.png' },
@@ -110,166 +191,145 @@
             { name: 'Git', icon: 'assets/Git.png' },
             { name: 'Tailwind', icon: 'assets/Tailwind.png' },
             { name: 'VS Code', icon: 'assets/VsCode.png' },
-          ].map((skill) => (
+          ].map(skill => (
             <div key={skill.name} className="flex flex-col items-center">
               <div className="skill-img-container">
-                <img
-                  src={skill.icon}
-                  alt={`${skill.name} icon`}
-                  className="w-full h-full object-cover rounded-lg"
-                />
+                <img src={skill.icon} alt="" className="w-full h-full object-cover rounded-lg" />
               </div>
-              <p className="mt-3 text-gray-300 font-inter">{skill.name}</p>
+              <p className="mt-3 text-gray-300">{skill.name}</p>
             </div>
           ))}
+
         </div>
+
       </section>
     );
 
- const Project = () => (
+    /* ------------------- PROJECTS ------------------- */
+
+    const Project = () => (
       <section id="project" className="section initial">
-        <h2 className="text-4xl font-bold mb-10 mt-12 text-center font-poppins text-emerald-400">Projects</h2>
+        <h2 className="text-4xl font-bold mb-10 mt-12 text-center text-emerald-400">Projects</h2>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto px-6">
+
           {[
-            { 
-              id: 1, 
-              title: 'HouseWare Hub', 
-              description: 'A modern ecommerce app built with React and Tailwind CSS.', 
+            {
+              id: 1,
+              title: 'HouseWare Hub',
+              description: 'A modern ecommerce app built with React and Tailwind CSS.',
               image: 'assets/HouseWare.png',
-              link: 'https://housewarehub.example.com'
+              link: '#'
             },
-            { 
-              id: 2, 
-              title: 'A Calculator', 
-              description: 'Build using HTML and CSS.', 
+            {
+              id: 2,
+              title: 'Calculator',
+              description: 'A simple calculator made with HTML & CSS.',
               image: 'assets/Calcu.png',
               link: 'https://birajdura.github.io/Calculator/'
-            },
-          ].map((project) => (
+            }
+          ].map(project => (
             <div key={project.id} className="bg-[hsl(186,61%,13%)] rounded-lg p-4">
-              <img 
-                src={project.image} 
-                alt={`${project.title} illustration`} 
-                className="w-full h-48 mb-4 rounded-lg object-cover"
-              />
-              <h3 className="text-xl font-poppins font-semibold mb-2">{project.title}</h3>
-              <p className="text-gray-300 font-inter mb-4">{project.description}</p>
+
+              <img src={project.image} className="w-full h-48 mb-4 rounded-lg object-cover" />
+
+              <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+              <p className="text-gray-300 mb-4">{project.description}</p>
+
               <div className="flex justify-center">
-                <a 
-                  href={project.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-emerald-400 hover:text-emerald-200 font-inter bg-[hsl(186,61%,20%)] px-4 py-2 rounded-md"
-                >
+                <a href={project.link} target="_blank"
+                  className="text-emerald-400 hover:text-emerald-200 bg-[hsl(186,61%,20%)] px-4 py-2 rounded-md">
                   Visit Website
                 </a>
               </div>
+
             </div>
           ))}
+
         </div>
+
       </section>
     );
 
-const Contact = () => (
-  <section id="contact" className="section initial relative">
-    <h2 className="text-4xl font-bold mb-10 mt-12 text-center font-poppins text-emerald-400">Contact</h2>
-    <div className="content-overlay py-16 flex justify-center items-center">
-      <div className="flex flex-col md:flex-row w-full max-w-5xl px-6">
-        <div className="flex-1 text-center md:text-left">
-          <img 
-            src="assets/Portfolio.jpg" 
-            alt="Contact illustration" 
-            className="w-full max-w-xs mx-auto md:mx-0 mb-6 rounded-lg"
-          />
-          <h2 className="text-4xl font-bold mb-4 text-white font-poppins">GET IN TOUCH</h2>
-          <div className="flex justify-center md:justify-start mb-6">
-            <span className="text-lg font-semibold text-white font-inter">durabiraj220@gmail.com</span>
+    /* ------------------- CONTACT ------------------- */
+
+    const Contact = () => (
+      <section id="contact" className="section initial relative">
+        <h2 className="text-4xl font-bold mb-10 mt-12 text-center text-emerald-400">Contact</h2>
+
+        <div className="py-16 flex justify-center items-center">
+
+          <div className="flex flex-col md:flex-row w-full max-w-5xl px-6">
+
+            <div className="flex-1 text-center md:text-left">
+              <img src="assets/Portfolio.jpg" className="w-full max-w-xs mx-auto mb-6 rounded-lg" />
+
+              <h2 className="text-4xl font-bold mb-4">GET IN TOUCH</h2>
+              <p className="text-lg font-semibold mb-6">durabiraj220@gmail.com</p>
+            </div>
+
+            <div className="flex-1 text-lg text-white space-y-2 md:ml-8 mt-6 md:mt-0">
+
+              <p>We care about your projects. Let me know how I can help you.</p>
+
+              <br />
+
+              <p className="font-semibold">Social Links:</p>
+
+              <p><a href="https://www.instagram.com/durabiraj/" className="hover:text-white flex items-center"><i className="fab fa-instagram mr-2"></i> Instagram</a></p>
+              <p><a href="https://www.facebook.com/durabiraj.2810" className="hover:text-white flex items-center"><i className="fab fa-facebook-f mr-2"></i> Facebook</a></p>
+              <p><a href="https://www.linkedin.com/in/biraj-dura-068a41349/" className="hover:text-white flex items-center"><i className="fab fa-linkedin mr-2"></i> LinkedIn</a></p>
+
+              <a href="mailto:durabiraj220@gmail.com" className="btn">Hire Me</a>
+
+            </div>
+
           </div>
         </div>
-        <div className="flex-1 text-lg text-white space-y-2 font-inter mb-6 mt-6 md:mt-0 md:ml-8">
-          <p>We genuinely care about you and your projects. Let us know how I can serve you better.</p>
-          <p>FAQ: Your frequently asked questions here.</p>
-          <br />
-          <p>Social Links:</p>
-          <p>
-            <a href="https://www.instagram.com/durabiraj/" className="hover:text-white flex items-center">
-              <i className="fab fa-instagram mr-2"></i> Instagram
-            </a>
-          </p>
-          <p>
-            <a href="https://www.facebook.com/durabiraj.2810" className="hover:text-white flex items-center">
-              <i className="fab fa-facebook-f mr-2"></i> Facebook
-            </a>
-          </p>
-          <p>
-            <a href="https://www.linkedin.com/in/biraj-dura-068a41349/" className="hover:text-white flex items-center">
-              <i className="fab fa-linkedin-in mr-2"></i> LinkedIn
-            </a>
-          </p>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=durabiraj220@gmail.com" className="btn">Hire Me</a>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-    
-const Footer = () => (
-      <footer className="bg-transparent text-white p-6 text-center">
-        <p className="font-inter text-gray-300">© 2025 Birajman Dura. All right reserved.</p>
+
+      </section>
+    );
+
+    /* ------------------- FOOTER ------------------- */
+
+    const Footer = () => (
+      <footer className="text-center py-6 text-gray-300">
+        © 2025 Birajman Dura. All rights reserved.
       </footer>
     );
+
+    /* ------------------- GO TO TOP ------------------- */
 
     const GoToTop = () => {
       const [isVisible, setIsVisible] = React.useState(false);
 
-      const toggleVisibility = () => {
-        setIsVisible(window.scrollY > 300);
-      };
-
-      const scrollToTop = () => {
-        const pageContent = document.querySelector('.page-content');
-        pageContent.classList.add('fade-out');
-        setTimeout(() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          pageContent.classList.remove('fade-out');
-        }, 300);
-      };
-
       React.useEffect(() => {
-        window.addEventListener('scroll', toggleVisibility);
-        return () => window.removeEventListener('scroll', toggleVisibility);
+        const toggle = () => setIsVisible(window.scrollY > 300);
+        window.addEventListener('scroll', toggle);
+        return () => window.removeEventListener('scroll', toggle);
       }, []);
 
       return (
         <div
           className={`go-to-top ${isVisible ? 'visible' : ''}`}
-          onClick={scrollToTop}
-          title="Go to top"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           <i className="fas fa-arrow-up"></i>
         </div>
       );
     };
 
+    /* ------------------- MAIN APP ------------------- */
+
     const App = () => {
       React.useEffect(() => {
         const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-            }
-          });
+          entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1 });
 
-        sections.forEach(section => {
-          observer.observe(section);
-        });
-
-        // Ensure the first section is visible on load
+        sections.forEach(sec => observer.observe(sec));
         sections[0].classList.add('visible');
-
-        return () => observer.disconnect();
       }, []);
 
       return (
@@ -286,9 +346,11 @@ const Footer = () => (
       );
     };
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    /* ------------------- RENDER ------------------- */
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
   </script>
+
 </body>
 
 </html>
